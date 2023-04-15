@@ -22,7 +22,9 @@ q1() {
 		if (((int)y + 2) % 10 == 0) {
 			y += 3;
 		}
-		y += 2;
+		else {
+			y += 2;
+		}
 		if ((int)y > 100) {
 			y = 100;
 		}
@@ -46,35 +48,93 @@ q2() {
 	scanf(" %c", &c);
 	printf("Please enter edge length:\n");
 	scanf("%d", &length);
+	int message_length = 0;
 	switch (a) {
-	case 1: while (length < 6) {
-		printf("Invalid edge length, please enter a larger number:\n");
-		scanf("%d", &length);
-	}break;
-	case 2: while (length < 7) {
-		printf("Invalid edge length, please enter a larger number:\n");
-		scanf("%d", &length);
-	}break;
-	case 3: while (length < 19) {
-		printf("Invalid edge length, please enter a larger number:\n");
-		scanf("%d", &length);
-	}break;
+	case 1:
+		message_length = 7; 
+		while (length < 6) {
+			printf("Invalid edge length, please enter a larger number:\n");
+			scanf("%d", &length);
+		}
+		  break;
+	case 2:
+		message_length = 9;
+		while (length < 7) {
+			printf("Invalid edge length, please enter a larger number:\n");
+			scanf("%d", &length);
+		}
+		  break;
+	case 3: 
+		message_length = 33;
+		while (length < 19) {
+			printf("Invalid edge length, please enter a larger number:\n");
+			scanf("%d", &length);
+		}
+		  break;
 	}
-	int cnt_1 = 1;
-	while (cnt_1 < ((2 * length) - 1)) {
-		int cnt_2 = 1;
-		if (cnt_1 == 1) {
-			while (cnt_2 <= ((2 * length) - 1)) {
-				if (cnt_2 != length) {
-					printf(" ");
+	int cnt_1 = 1, cnt_2 = 1, spacer = 1, space_increment = 1;
+	while (cnt_1 < (2 * length)) {
+		if ((cnt_1 == 1) || (cnt_1 == (2 * length - 1))) {
+			cnt_2 = 1;
+			while (cnt_2 < (2 * length)) {
+				if (cnt_2 == length) {
+					printf("%c", c);
+				}
+				else if (cnt_2 == ((2 * length) - 1)) {
+					printf(" \n");
 				}
 				else {
-					printf("%c", c);
+					printf(" ");
 				}
 				cnt_2 += 1;
 			}
+			cnt_1 += 1;
 		}
-		cnt_1 += 1
+		else if (cnt_1 == length) {
+			cnt_2 = 1;
+			while (cnt_2 < (2 * length)) {
+				if (cnt_2 == 1) {
+					printf("%c", c);
+				}
+				else if (cnt_2 == ((2 * length) - 1)) {
+					printf("%c\n", c);
+				}
+				else if (cnt_2 == (length - (message_length / 2))) {
+					switch (a) {
+					case 1: printf("Hurray!"); break;
+					case 2: printf("You Win!!"); break;
+					case 3: printf("How do i get out of this rhombus?"); break;
+					}
+					cnt_2 += message_length;
+					continue;
+				}
+				else {
+					printf(" ");
+				}
+				cnt_2 += 1;
+			}
+			cnt_1 += 1;
+			space_increment = -1;
+			spacer += space_increment;
+		}
+		else {
+			cnt_2 = 1;
+			while (cnt_2 < (2 * length)) {
+				if ((cnt_2 == (length - spacer)) || (cnt_2 == (length + spacer))) {
+					printf("%c", c);
+				}
+				else if (cnt_2 == ((2 * length) - 1)){
+					printf(" \n");
+				}
+				else {
+					printf(" ");
+				}
+				cnt_2 += 1;
+			}
+			spacer += space_increment; //space increment
+			cnt_1 += 1;
+		}
+		
 	}
 }
 
