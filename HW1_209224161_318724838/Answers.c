@@ -41,29 +41,45 @@ q2() {
 		printf("Invalid message index, please enter an index between 1 and 3:\n");
 		scanf("%d", &a);
 	}
+	char c = 'a';
 	printf("Please enter your favorite character:\n");
-	char c = 'x';
-	scanf("%c", &c);
-	printf("Please enter edge length:");
+	scanf(" %c", &c);
+	printf("Please enter edge length:\n");
 	scanf("%d", &length);
 	switch (a) {
-	case 1: while (length < 9) {
-		printf("Invalid edge length, please enter a larger number:");
+	case 1: while (length < 6) {
+		printf("Invalid edge length, please enter a larger number:\n");
 		scanf("%d", &length);
 	}break;
-	case 2: while (length < 11) {
-		printf("Invalid edge length, please enter a larger number:");
+	case 2: while (length < 7) {
+		printf("Invalid edge length, please enter a larger number:\n");
 		scanf("%d", &length);
 	}break;
-	case 3: while (length < 35) {
-		printf("Invalid edge length, please enter a larger number:");
+	case 3: while (length < 19) {
+		printf("Invalid edge length, please enter a larger number:\n");
 		scanf("%d", &length);
 	}break;
+	}
+	int cnt_1 = 1;
+	while (cnt_1 < ((2 * length) - 1)) {
+		int cnt_2 = 1;
+		if (cnt_1 == 1) {
+			while (cnt_2 <= ((2 * length) - 1)) {
+				if (cnt_2 != length) {
+					printf(" ");
+				}
+				else {
+					printf("%c", c);
+				}
+				cnt_2 += 1;
+			}
+		}
+		cnt_1 += 1
 	}
 }
 
 int main() {
-	q1();
+//	q1();
 	q2();
 	return 0;
 }
