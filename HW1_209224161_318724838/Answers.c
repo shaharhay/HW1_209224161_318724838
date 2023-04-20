@@ -2,54 +2,52 @@
 #include <stdio.h>
 
 q1() {
-	int x = 0, cnt = 0;
-	double y = 0, sum = 0;
-	while (x != -1) {
+	int grade = 0, grades_num = 0;
+	double final_grade = 0, sum = 0;
+	while (grade != -1) {
 		printf("Please enter grade:\n");
-		scanf("%d", &x);
-		if (x == -1) {
+		scanf("%d", &grade);
+		if (grade == -1) { //stop condition
 			break;
 		}
-		if ((x < 0) || (x > 100)) {
+		if ((grade < 0) || (grade > 100)) {
 			printf("Invalid grade. ");
 			continue;
 		}
-		cnt += 1;
-		y = 1.1 * x;
-		if (y - (int)y != 0) {
-			y = (int)y + 1;
+		grades_num += 1;
+		final_grade = 1.1 * grade;// add 10% to the grade
+		if (final_grade - (int)final_grade != 0) { // round up the final grade if its not an integer
+			final_grade = (int)final_grade + 1;
 		}
-		if (((int)y + 2) % 10 == 0) {
-			y += 3;
+		final_grade += 2; // adds 2 point to the final grade
+		if (((int)final_grade) % 10 == 0) { // if the first digit is 0 we add 1 more to the final grade
+			final_grade += 1;
 		}
-		else {
-			y += 2;
+		if ((int)final_grade > 100) { 
+			final_grade = 100;
 		}
-		if ((int)y > 100) {
-			y = 100;
-		}
-		sum += y;
-		printf("Final grade: %d\n", (int)y);
-		printf("Current average after factor: %.2f\n", (sum/cnt));
+		sum += final_grade;
+		printf("Final grade: %d\n", (int)final_grade);
+		printf("Current average after factor: %.2f\n", (sum/grades_num));
 	}
 	return 0;
 }
 
 q2() {
-	int a = 0, length = 0;
+	int message = 0, length = 0;
 	printf("Please select message to print:\nEnter 1 for \"Hurray!\"\nEnter 2 for \"You Win!!\"\nEnter 3 for \"How do i get out of this rhombus?\"\n");		
-	scanf("%d", &a);
-	while ((a < 1) || (a > 3)) {
+	scanf("%d", &message);
+	while ((message < 1) || (message > 3)) {
 		printf("Invalid message index, please enter an index between 1 and 3:\n");
-		scanf("%d", &a);
+		scanf("%d", &message);
 	}
-	char c = 'a';
+	char symbol = 'a';
 	printf("Please enter your favorite character:\n");
-	scanf(" %c", &c);
+	scanf(" %c", &symbol);
 	printf("Please enter edge length:\n");
 	scanf("%d", &length);
 	int message_length = 0;
-	switch (a) {
+	switch (message) { // in each message we check if the message length fit in the shape
 	case 1:
 		message_length = 7; 
 		while (length < 6) {
@@ -72,74 +70,74 @@ q2() {
 		}
 		  break;
 	}
-	int cnt_1 = 1, cnt_2 = 1, spacer = 1, space_increment = 1;
-	while (cnt_1 < (2 * length)) {
-		if ((cnt_1 == 1) || (cnt_1 == (2 * length - 1))) {
-			cnt_2 = 1;
-			while (cnt_2 < (2 * length)) {
-				if (cnt_2 == length) {
-					printf("%c", c);
+	int rows = 1, row_idx = 1, spacer = 1, space_increment = 1;
+	while (rows < (2 * length)) {
+		if ((rows == 1) || (rows == (2 * length - 1))) { // takes care of the first and last row
+			row_idx = 1;
+			while (row_idx < (2 * length)) {
+				if (row_idx == length) {
+					printf("%c", symbol);
 				}
-				else if (cnt_2 == ((2 * length) - 1)) {
+				else if (row_idx == ((2 * length) - 1)) {
 					printf(" \n");
 				}
 				else {
 					printf(" ");
 				}
-				cnt_2 += 1;
+				row_idx += 1;
 			}
-			cnt_1 += 1;
+			rows += 1;
 		}
-		else if (cnt_1 == length) {
-			cnt_2 = 1;
-			while (cnt_2 < (2 * length)) {
-				if (cnt_2 == 1) {
-					printf("%c", c);
+		else if (rows == length) { // middle row
+			row_idx = 1;
+			while (row_idx < (2 * length)) {
+				if (row_idx == 1) {
+					printf("%c", symbol);
 				}
-				else if (cnt_2 == ((2 * length) - 1)) {
-					printf("%c\n", c);
+				else if (row_idx == ((2 * length) - 1)) {
+					printf("%c\n", symbol);
 				}
-				else if (cnt_2 == (length - (message_length / 2))) {
-					switch (a) {
+				else if (row_idx == (length - (message_length / 2))) {
+					switch (message) {
 					case 1: printf("Hurray!"); break;
 					case 2: printf("You Win!!"); break;
 					case 3: printf("How do i get out of this rhombus?"); break;
 					}
-					cnt_2 += message_length;
+					row_idx += message_length;
 					continue;
 				}
 				else {
 					printf(" ");
 				}
-				cnt_2 += 1;
+				row_idx += 1;
 			}
-			cnt_1 += 1;
-			space_increment = -1;
+			rows += 1;
+			space_increment = -1; // we change the space increment for the rows after the middle
 			spacer += space_increment;
 		}
-		else {
-			cnt_2 = 1;
-			while (cnt_2 < (2 * length)) {
-				if ((cnt_2 == (length - spacer)) || (cnt_2 == (length + spacer))) {
-					printf("%c", c);
+		else { // handle the rows that are inbetween the first and last rows not including the middle row
+			row_idx = 1;
+			while (row_idx < (2 * length)) {
+				if ((row_idx == (length - spacer)) || (row_idx == (length + spacer))) {
+					printf("%c", symbol);
 				}
-				else if (cnt_2 == ((2 * length) - 1)){
+				else if (row_idx == ((2 * length) - 1)){
 					printf(" \n");
 				}
 				else {
 					printf(" ");
 				}
-				cnt_2 += 1;
+				row_idx += 1;
 			}
 			spacer += space_increment; //space increment
-			cnt_1 += 1;
+			rows += 1;
 		}
 		
 	}
 }
 
 int main() {
-//	q1();
+	q1();
 	q2();
 	return 0;
 }
